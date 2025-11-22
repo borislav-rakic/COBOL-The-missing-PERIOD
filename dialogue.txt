@@ -1,0 +1,5 @@
+I'm testing dialoge file access.
+Not sure if it's working.
+I need to test further.
+This is a very long text to determine the feasability of storing dialogue in an external file.
+Let's see if this works.
