@@ -1,5 +1,18 @@
-I'm testing dialoge file access.
-Not sure if it's working.
-I need to test further.
-This is a very long text to determine the feasability of storing dialogue in an external file.
-Let's see if this works.
+PROCEDURE:
+NONE;3;
+You are surrounded by a dizzying sequence of MOVE and COMPUTE statements. A large, dimly glowing sign points in two directions: WORKING-STORAGE and FILES.
+GO WORKING-STORAGE;5;GO FILES;9;GO EXIT;13;
+WORKING-STORAGE:
+NONE;7;
+This space is immense, filled with perfectly organized shelves of data fields. Each shelf holds thousands of variables. In the center, an ancient, neglected console is blinking.
+GO PROCEDURE;1;GO FILES;9;EXAMINE CONSOLE;15;
+FILES:
+NONE;11;
+TESTING FILES
+NONE
+TESTING EXIT
+NONE
+TESTING CONSOLE1
+NONE;17;
+TESTING CONSOLE2
+TESTING;18;
