@@ -1,17 +1,17 @@
 PROCEDURE:
 NONE;3;
 You are surrounded by a dizzying sequence of MOVE and COMPUTE statements. A large, dimly glowing sign points in two directions: WORKING-STORAGE and FILES.
-INVALID;1;GO WORKING-STORAGE;5;GO FILES;9;GO EXIT;13;
+INVALID;1;GO WORKING-STORAGE;5;GO FILES;9;GO COMPILER;47;GO EXIT;13;
 WORKING-STORAGE:
 NONE;7;
 This space is immense, filled with perfectly organized shelves of data fields. Each shelf holds thousands of variables. In the center, an ancient, neglected console is blinking.
 INVALID;5;GO PROCEDURE;1;GO FILES;9;EXAMINE CONSOLE;15;
 FILES:
 NONE;11;
-TESTING FILES
-NONE
-TESTING EXIT
-NONE
+A massive, dark vault where all the external data records are stored. You see a small, round object on the floor near a FILE DEFINITION, and a console right next to it.
+INVALID;9;GO PROCEDURE;1;GO WORKING-STORAGE;5;EXAMINE OBJECT;37;EXAMINE CONSOLE;93;
+There are two machines next to the exit door. One one each side. Each is blinking in anticipation of a card-like object.
+INVALID;13;GO BACK;1;
 *This variable will be used to hold the
 NONE;17;
 *selected customer's 6-digit balance.
@@ -21,7 +21,7 @@ NONE;21;
  
 NONE;23;
 It seems you have to define the file type of the variable. What type of variable would be suitable here?
-INVALID;15;HIDDEN;0;PIC 9(6);25;PIC 999999;25;
+INVALID;15;GO BACK;7;HIDDEN;0;PIC 9(6);25;PIC 999999;25;
 *This variable will be used to hold the
 NONE;27;
 *selected customer's 6-digit balance.
@@ -34,3 +34,145 @@ After defining the variable's file type, the console beeps once to hint at the v
 NONE;35;
 You see a piece of paper slowly coming out from below the console's screen. You take it and realize that it is a punch card.
 INVALID;25;GO PROCEDURE;1;GO FILES;9;EXAMINE CONSOLE;15;
+As you come closer to the object lying on the floor, you realize it is a period character. You pick it up and store it in your pocket.
+INVALID;9;GO PROCEDURE;1;GO WORKING-STORAGE;5;EXAMINE CONSOLE;93;
+You already examined the console.
+NONE;41;
+
+NONE;5;
+You already examined the object.
+NONE;45;
+
+NONE;9;
+COMPILER:
+NONE;49;
+A single, humming mainframe terminal displaying a perpetual error:
+NONE;51;
+totally-real-financial-application.cbl:1236: error: 'CHECK-TRANSACTION-VALIDITY' is not defined
+NONE;53;
+  1234 |            MOVE 1 TO CURRENT-TRANSACTION-COUNTER
+NONE;55;
+  1235 | 
+NONE;57;
+  1236 >        CHECK-TRANSACTION-VALIDITY.
+NONE;59;
+  1237 |            MOVE 3 TO CURRENT-TRANSACTION-COUNTER.
+NONE;61;
+  1238 |
+NONE;63;
+
+NONE;65;
+The cursor blinks impatiently.
+INVALID;47;GO PROCEDURE;1;
+COMPILER:
+NONE;69;
+A single, humming mainframe terminal displaying a perpetual error:
+NONE;71;
+totally-real-financial-application.cbl:1236: error: 'CHECK-TRANSACTION-VALIDITY' is not defined
+NONE;73;
+  1234 |            MOVE 1 TO CURRENT-TRANSACTION-COUNTER
+NONE;75;
+  1235 | 
+NONE;77;
+  1236 >        CHECK-TRANSACTION-VALIDITY.
+NONE;79;
+  1237 |            MOVE 3 TO CURRENT-TRANSACTION-COUNTER.
+NONE;81;
+  1238 |
+NONE;83;
+
+NONE;85;
+The cursor blinks impatiently.
+INVALID;67;GO PROCEDURE;1;USE PERIOD;87;
+You insert the missing period and the error disappears. Relieved, you return to PROCEDURE.
+INVALID;1;GO WORKING-STORAGE;5;GO FILES;9;GO COMPILER;47;GO EXIT;13;
+FILES:
+NONE;91;
+A massive, dark vault where all the external data records are stored. There is a console in one of the corners.
+INVALID;9;GO PROCEDURE;1;GO WORKING-STORAGE;5;EXAMINE CONSOLE;93;
+*A record in this file contains 100 characters.
+NONE;95;
+ FD CUSTOMER-FILE
+NONE;97;
+    ______ ________ ___ __________
+NONE;99;
+    DATA RECORD IS CUSTOMER-RECORD.
+NONE;101;
+
+NONE;103;
+The console is asking for your input.
+INVALID;93;GO BACK;9;HIDDEN;0;RECORD CONTAINS 100 CHARACTERS;105;
+*A record in this file contains 100 characters.
+NONE;107;
+ FD CUSTOMER-FILE
+NONE;109;
+    RECORD CONTAINS 100 CHARACTERS
+NONE;111;
+    DATA RECORD IS CUSTOMER-RECORD.
+NONE;113;
+
+NONE;115;
+Beeping happily, the console spits out a punch card, and you take it with you.
+INVALID;9;GO PROCEDURE;1;GO WORKING-STORAGE;5;EXAMINE OBJECT;37;
+*A record in this file contains 100 characters.
+NONE;119;
+ FD CUSTOMER-FILE
+NONE;121;
+    RECORD CONTAINS 100 CHARACTERS
+NONE;123;
+    DATA RECORD IS CUSTOMER-RECORD.
+NONE;125;
+
+NONE;127;
+Beeping happily, the console spits out a punch card, and you take it with you.
+INVALID;9;GO PROCEDURE;1;GO WORKING-STORAGE;5;
+You already examined the console.
+NONE;131;
+
+NONE;9;
+There are two machines next to the exit door. One one each side. Each is blinking in anticipation of a card-like object. Maybe you have to insert two punch cards?
+INVALID;13;GO BACK;1;
+There are two machines next to the exit door. One one each side. Each is blinking in anticipation of a card-like object. Maybe you have to insert two punch cards?
+INVALID;13;GO BACK;1;INSERT PUNCH CARDS;137;
+An audible click indicates the door is now unlocked. You are blinded by a bright light as you open it carefully.
+ENDING;145;
+The compiler seems to be throwing an error. You should probably take a look.
+INVALID;1;GO WORKING-STORAGE;5;GO FILES;9;GO COMPILER;47;GO EXIT;13;
+You already resolved the compilation error.
+NONE;143
+
+NONE;1;
+0
+0
+7
+5As you are enshrouded by bright light, you start to hear a faint beeping sound.
+2beep...
+2beep...
+2beep...
+0
+0
+0
+5You realize, the beeping is getting louder.
+2Beep...
+2Beep...
+2Beep...
+0
+0
+0
+5Terrified, you notice, it isn't getting louder. 
+3It's getting CLOSER!
+2BEEP
+2BEEP
+2BEEP
+0
+0
+0
+5You wake up in a cold sweat. The alarm clock next to your bed is going off.
+5After calming down a bit, you realize, it was all just a dream.
+5You aren't part of some weird COBOL program.
+5You are a COBOL engineer!
+5And you just fixed a bug that's been plaguing you for days!
+0
+0
+0
+5END-THE-MISSING-PERIOD.

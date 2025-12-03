@@ -31,7 +31,7 @@
 
        01 WS-EOF-DIALOGUE-FLAG     PIC X(1) VALUE 'N'.
            88 EOF-DIALOGUE-REACHED          VALUE 'Y'.
-       01 WS-DIALOGUE-RECORD-COUNT PIC 9(2) VALUE 0.
+       01 WS-DIALOGUE-RECORD-COUNT PIC 9(3) VALUE 0.
 
        01 WS-GAME-QUIT             PIC X(1) VALUE 'N'.
            88 GAME-QUIT                     VALUE 'Y'.
@@ -50,7 +50,7 @@
        
       *We define a TABLE that will hold world information and dialogue.
        01 WORLD-TABLE.
-           02 DIALOGUE             PIC X(500) OCCURS 100 TIMES.
+           02 DIALOGUE             PIC X(500) OCCURS 200 TIMES.
 
        01 WS-STRING-POINTER        PIC 9(2) VALUE 1.
        
@@ -61,12 +61,15 @@
            88 ACTION-VALID                  VALUE 'Y'
                                    WHEN SET TO FALSE IS 'N'.
 
-       01 CURRENT-DIALOGUE-INDEX   PIC 9(2) VALUE 1.
+       01 CURRENT-DIALOGUE-INDEX   PIC 9(3) VALUE 1.
 
       *These variables will hold VALUES determining the progress OF
       *the player.
        01 TASKS-COMPLETED.
            02 WS-PUNCH-CARD        PIC X(1) VALUE 'N'.
+           02 FILES-MISSING-PERIOD PIC X(1) VALUE 'N'.
+           02 FILES-PUNCH-CARD     PIC X(1) VALUE 'N'.
+           02 COMPILER-SOLVED      PIC X(1) VALUE 'N'.
 
        01 PLAYER-DATA.
            02 PLAYER-HEALTH        PIC ZZ9.
@@ -104,8 +107,6 @@
 
        MAIN-MENU-ROUTINE.
            PERFORM INITIALIZE-WORLD-TABLE.
-
-           DISPLAY FUNCTION TRIM(DIALOGUE(1)).
 
            PERFORM UNTIL INPUT-VALID
                DISPLAY "Welcome adventurer! Please select an option by "
@@ -158,6 +159,10 @@
            DISPLAY "CREATING NEW GAME".
 
        EXPLORING-ROUTINE.
+      *    First we check if certain conditions are met, in which case  
+      *    the player would be redirected TO different DIALOGUE.
+           PERFORM CHECK-CONDITIONS.
+
            DISPLAY FUNCTION TRIM(DIALOGUE(CURRENT-DIALOGUE-INDEX)
                TRAILING).
 
@@ -166,7 +171,10 @@
            PERFORM RESET-AVAILABLE-ACTIONS.
            PERFORM INIT-AVAILABLE-ACTIONS.
 
-           IF FUNCTION TRIM(ACTION(1)) NOT EQUAL "NONE"
+           IF FUNCTION TRIM(ACTION(1)) = "ENDING"
+               MOVE ACTION(2) TO CURRENT-DIALOGUE-INDEX
+               PERFORM ENDING-LOGIC
+           ELSE IF FUNCTION TRIM(ACTION(1)) NOT EQUAL "NONE"
                DISPLAY "------------------"
                DISPLAY "Available actions:"
 
@@ -255,4 +263,56 @@
        
        PROGRESS-CHECK.
            IF CURRENT-DIALOGUE-INDEX = 35
-               SET WS-PUNCH-CARD TO 'Y'.
+               SET WS-PUNCH-CARD TO 'Y'
+           ELSE IF CURRENT-DIALOGUE-INDEX = 37
+               SET FILES-MISSING-PERIOD TO 'Y'
+           ELSE IF CURRENT-DIALOGUE-INDEX = 115 
+               OR CURRENT-DIALOGUE-INDEX = 127
+               SET FILES-PUNCH-CARD TO 'Y'
+           ELSE IF CURRENT-DIALOGUE-INDEX = 87
+               SET COMPILER-SOLVED TO 'Y'
+           END-IF.
+       
+       CHECK-CONDITIONS.
+           IF CURRENT-DIALOGUE-INDEX = 15
+               AND WS-PUNCH-CARD = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 39
+           ELSE IF CURRENT-DIALOGUE-INDEX = 37
+               AND FILES-MISSING-PERIOD = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 43
+           ELSE IF CURRENT-DIALOGUE-INDEX = 9
+               AND FILES-MISSING-PERIOD = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 89
+           ELSE IF CURRENT-DIALOGUE-INDEX = 47
+               AND COMPILER-SOLVED = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 141
+           ELSE IF CURRENT-DIALOGUE-INDEX = 47
+               AND FILES-MISSING-PERIOD = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 67
+           ELSE IF CURRENT-DIALOGUE-INDEX = 93
+               AND FILES-PUNCH-CARD = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 129
+           ELSE IF CURRENT-DIALOGUE-INDEX = 105
+               AND FILES-MISSING-PERIOD = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 117
+           ELSE IF CURRENT-DIALOGUE-INDEX = 13
+               AND WS-PUNCH-CARD = 'Y' AND FILES-PUNCH-CARD = 'Y'
+               SET CURRENT-DIALOGUE-INDEX TO 135
+           ELSE IF CURRENT-DIALOGUE-INDEX = 13
+               AND (WS-PUNCH-CARD = 'Y' OR FILES-PUNCH-CARD = 'Y')
+               SET CURRENT-DIALOGUE-INDEX TO 133
+           ELSE IF CURRENT-DIALOGUE-INDEX = 137
+               AND COMPILER-SOLVED = 'N'
+               SET CURRENT-DIALOGUE-INDEX TO 139
+           END-IF.
+       
+       ENDING-LOGIC.
+           PERFORM UNTIL CURRENT-DIALOGUE-INDEX > 178
+               DISPLAY FUNCTION
+                   TRIM(DIALOGUE(CURRENT-DIALOGUE-INDEX)(2:499))
+               CALL "C$SLEEP" USING DIALOGUE(CURRENT-DIALOGUE-INDEX)
+                                       (1:1)
+               ADD 1 TO CURRENT-DIALOGUE-INDEX
+           END-PERFORM.
+
+           SET GAME-QUIT TO TRUE.
