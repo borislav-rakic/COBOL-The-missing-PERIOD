@@ -71,9 +71,6 @@
            02 FILES-PUNCH-CARD     PIC X(1) VALUE 'N'.
            02 COMPILER-SOLVED      PIC X(1) VALUE 'N'.
 
-       01 PLAYER-DATA.
-           02 PLAYER-HEALTH        PIC ZZ9.
-
        PROCEDURE DIVISION.
        MAIN-LOGIC.
            PERFORM UNTIL GAME-QUIT
@@ -113,6 +110,8 @@
                        "typing the number into the command line:"
                DISPLAY "1: Load Game"
                DISPLAY "2: New Game"
+               DISPLAY " "
+               DISPLAY "Input: " WITH NO ADVANCING
 
                ACCEPT USER-INPUT
 
@@ -122,41 +121,13 @@
                    PERFORM LOAD-GAME-ROUTINE
                ELSE IF USER-INPUT(1:1) = "2"                            
                    PERFORM NEW-GAME-ROUTINE
+                   PERFORM LOAD-GAME-ROUTINE
                ELSE
                    SET INPUT-VALID TO FALSE
                    DISPLAY "Invalid input!"
                    DISPLAY " "
                END-IF
            END-PERFORM.
-       
-       LOAD-GAME-ROUTINE.
-           OPEN INPUT SAVE-FILE.
-
-           PERFORM UNTIL EOF-SAVE-REACHED
-               READ SAVE-FILE
-                   AT END
-                       SET EOF-SAVE-REACHED TO TRUE
-                   NOT AT END
-                       PERFORM LOAD-SAVE
-               END-READ
-           END-PERFORM.
-
-           CLOSE SAVE-FILE.
-
-           SET EXPLORING TO TRUE.
-
-           DISPLAY " ".
-       
-       LOAD-SAVE.
-      *    The first line is the player's health.
-           IF WS-SAVE-RECORD-COUNT = 0
-               MOVE SAVE-RECORD TO PLAYER-HEALTH
-           END-IF.
-
-           ADD 1 TO WS-SAVE-RECORD-COUNT.
-       
-       NEW-GAME-ROUTINE.
-           DISPLAY "CREATING NEW GAME".
 
        EXPLORING-ROUTINE.
       *    First we check if certain conditions are met, in which case  
@@ -183,128 +154,16 @@
                DISPLAY "Input: " WITH NO ADVANCING
 
                ACCEPT USER-INPUT
+
+               IF USER-INPUT = "SAVE"
+                   PERFORM SAVE-QUIT-LOGIC
+               END-IF
                
                DISPLAY "+++++++++++++++++++++++++++++++++++++++++"
 
                PERFORM CHECK-ACTION-VALIDITY
            ELSE
                SET CURRENT-DIALOGUE-INDEX TO ACTION(2).
-       
-       RESET-AVAILABLE-ACTIONS.
-           PERFORM UNTIL CURRENT-ACTION-COUNTER > 16
-               MOVE " " TO ACTION(CURRENT-ACTION-COUNTER)
-               ADD 1 TO CURRENT-ACTION-COUNTER
-           END-PERFORM.
-
-           MOVE 1 TO CURRENT-ACTION-COUNTER.
-       
-       INIT-AVAILABLE-ACTIONS.
-           PERFORM UNTIL CURRENT-ACTION-COUNTER > 16
-               UNSTRING DIALOGUE(CURRENT-DIALOGUE-INDEX + 1)
-                   DELIMITED BY ";"
-                   INTO ACTION(CURRENT-ACTION-COUNTER)
-                   WITH POINTER WS-STRING-POINTER
-               END-UNSTRING
-
-               IF ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL SPACES
-                   ADD 1 TO CURRENT-ACTION-COUNTER
-               ELSE
-                   EXIT PERFORM
-               END-IF
-           END-PERFORM.
-
-           MOVE 1 TO CURRENT-ACTION-COUNTER.
-       
-       DISPLAY-AVAILABLE-ACTIONS.
-           PERFORM UNTIL CURRENT-ACTION-COUNTER > 16
-               IF ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL SPACES AND
-                   ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL "HIDDEN"
-                   IF ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL "INVALID"
-                       DISPLAY 
-                           FUNCTION TRIM(ACTION(CURRENT-ACTION-COUNTER))
-                   END-IF
-                   ADD 2 TO CURRENT-ACTION-COUNTER
-               ELSE IF ACTION(CURRENT-ACTION-COUNTER) EQUAL "HIDDEN"
-                   DISPLAY "HIDDEN"
-                   DISPLAY " "
-                   EXIT PERFORM
-               ELSE
-                   DISPLAY " "
-                   EXIT PERFORM
-               END-IF
-           END-PERFORM.
-
-           MOVE 1 TO CURRENT-ACTION-COUNTER.
-       
-       CHECK-ACTION-VALIDITY.
-           MOVE 3 TO CURRENT-ACTION-COUNTER.
-
-           PERFORM UNTIL CURRENT-ACTION-COUNTER > 16 OR ACTION-VALID
-               IF USER-INPUT = ACTION(CURRENT-ACTION-COUNTER)
-                   SET ACTION-VALID TO TRUE
-               ELSE
-                   ADD 2 TO CURRENT-ACTION-COUNTER
-               END-IF
-           END-PERFORM.
-
-           IF ACTION-VALID
-               PERFORM PROGRESS-CHECK
-
-               SET CURRENT-DIALOGUE-INDEX TO
-                   ACTION(CURRENT-ACTION-COUNTER + 1)
-               DISPLAY " "
-           ELSE
-               DISPLAY "Invalid Input!"
-               DISPLAY " "
-               MOVE ACTION(2) TO CURRENT-DIALOGUE-INDEX.
-           
-           SET ACTION-VALID TO FALSE.
-           MOVE 1 TO CURRENT-ACTION-COUNTER.
-       
-       PROGRESS-CHECK.
-           IF CURRENT-DIALOGUE-INDEX = 35
-               SET WS-PUNCH-CARD TO 'Y'
-           ELSE IF CURRENT-DIALOGUE-INDEX = 37
-               SET FILES-MISSING-PERIOD TO 'Y'
-           ELSE IF CURRENT-DIALOGUE-INDEX = 115 
-               OR CURRENT-DIALOGUE-INDEX = 127
-               SET FILES-PUNCH-CARD TO 'Y'
-           ELSE IF CURRENT-DIALOGUE-INDEX = 87
-               SET COMPILER-SOLVED TO 'Y'
-           END-IF.
-       
-       CHECK-CONDITIONS.
-           IF CURRENT-DIALOGUE-INDEX = 15
-               AND WS-PUNCH-CARD = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 39
-           ELSE IF CURRENT-DIALOGUE-INDEX = 37
-               AND FILES-MISSING-PERIOD = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 43
-           ELSE IF CURRENT-DIALOGUE-INDEX = 9
-               AND FILES-MISSING-PERIOD = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 89
-           ELSE IF CURRENT-DIALOGUE-INDEX = 47
-               AND COMPILER-SOLVED = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 141
-           ELSE IF CURRENT-DIALOGUE-INDEX = 47
-               AND FILES-MISSING-PERIOD = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 67
-           ELSE IF CURRENT-DIALOGUE-INDEX = 93
-               AND FILES-PUNCH-CARD = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 129
-           ELSE IF CURRENT-DIALOGUE-INDEX = 105
-               AND FILES-MISSING-PERIOD = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 117
-           ELSE IF CURRENT-DIALOGUE-INDEX = 13
-               AND WS-PUNCH-CARD = 'Y' AND FILES-PUNCH-CARD = 'Y'
-               SET CURRENT-DIALOGUE-INDEX TO 135
-           ELSE IF CURRENT-DIALOGUE-INDEX = 13
-               AND (WS-PUNCH-CARD = 'Y' OR FILES-PUNCH-CARD = 'Y')
-               SET CURRENT-DIALOGUE-INDEX TO 133
-           ELSE IF CURRENT-DIALOGUE-INDEX = 137
-               AND COMPILER-SOLVED = 'N'
-               SET CURRENT-DIALOGUE-INDEX TO 139
-           END-IF.
        
        ENDING-LOGIC.
            PERFORM UNTIL CURRENT-DIALOGUE-INDEX > 178
@@ -316,3 +175,7 @@
            END-PERFORM.
 
            SET GAME-QUIT TO TRUE.
+       
+       COPY save-file-handling.
+       COPY available-actions.
+       COPY checking-functions.

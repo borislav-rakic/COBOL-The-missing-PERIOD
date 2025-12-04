@@ -1,0 +1,45 @@
+       RESET-AVAILABLE-ACTIONS.
+           PERFORM UNTIL CURRENT-ACTION-COUNTER > 16
+               MOVE " " TO ACTION(CURRENT-ACTION-COUNTER)
+               ADD 1 TO CURRENT-ACTION-COUNTER
+           END-PERFORM.
+
+           MOVE 1 TO CURRENT-ACTION-COUNTER.
+       
+       INIT-AVAILABLE-ACTIONS.
+           PERFORM UNTIL CURRENT-ACTION-COUNTER > 16
+               UNSTRING DIALOGUE(CURRENT-DIALOGUE-INDEX + 1)
+                   DELIMITED BY ";"
+                   INTO ACTION(CURRENT-ACTION-COUNTER)
+                   WITH POINTER WS-STRING-POINTER
+               END-UNSTRING
+
+               IF ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL SPACES
+                   ADD 1 TO CURRENT-ACTION-COUNTER
+               ELSE
+                   EXIT PERFORM
+               END-IF
+           END-PERFORM.
+
+           MOVE 1 TO CURRENT-ACTION-COUNTER.
+       
+       DISPLAY-AVAILABLE-ACTIONS.
+           PERFORM UNTIL CURRENT-ACTION-COUNTER > 16
+               IF ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL SPACES AND
+                   ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL "HIDDEN"
+                   IF ACTION(CURRENT-ACTION-COUNTER) NOT EQUAL "INVALID"
+                       DISPLAY 
+                           FUNCTION TRIM(ACTION(CURRENT-ACTION-COUNTER))
+                   END-IF
+                   ADD 2 TO CURRENT-ACTION-COUNTER
+               ELSE IF ACTION(CURRENT-ACTION-COUNTER) EQUAL "HIDDEN"
+                   DISPLAY "HIDDEN"
+                   DISPLAY " "
+                   EXIT PERFORM
+               ELSE
+                   DISPLAY " "
+                   EXIT PERFORM
+               END-IF
+           END-PERFORM.
+
+           MOVE 1 TO CURRENT-ACTION-COUNTER.
