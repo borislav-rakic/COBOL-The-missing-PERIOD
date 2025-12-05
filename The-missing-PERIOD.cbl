@@ -50,12 +50,12 @@
        
       *We define a TABLE that will hold world information and dialogue.
        01 WORLD-TABLE.
-           02 DIALOGUE             PIC X(500) OCCURS 200 TIMES.
+           02 DIALOGUE             PIC X(500) OCCURS 500 TIMES.
 
        01 WS-STRING-POINTER        PIC 9(2) VALUE 1.
        
        01 AVAILABLE-ACTIONS.
-           02 ACTION               PIC X(500) OCCURS 16 TIMES.
+           02 ACTION               PIC X(500) OCCURS 32 TIMES.
        01 CURRENT-ACTION-COUNTER   PIC 9(2) VALUE 1.
        01 ACTION-VALID-FLAG        PIC X(1) VALUE 'N'.
            88 ACTION-VALID                  VALUE 'Y'

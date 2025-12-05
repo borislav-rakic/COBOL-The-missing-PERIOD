@@ -14,6 +14,7 @@
 
            SET EXPLORING TO TRUE.
 
+           DISPLAY "+++++++++++++++++++++++++++++++++++++++++".
            DISPLAY " ".
        
        LOAD-SAVE.
@@ -55,4 +56,3 @@
            CLOSE SAVE-FILE.
 
            STOP RUN.
-           

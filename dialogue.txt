@@ -1,7 +1,7 @@
 PROCEDURE:
 NONE;3;
-You are surrounded by a dizzying sequence of MOVE and COMPUTE statements. A large, dimly glowing sign points in four directions: WORKING-STORAGE, FILES, COMPILER, and EXIT.
-INVALID;1;GO WORKING-STORAGE;5;GO FILES;9;GO COMPILER;47;GO EXIT;13;
+You are surrounded by a dizzying sequence of MOVE and COMPUTE statements. A large, dimly glowing sign points in four directions: WORKING-STORAGE, FILES, COMPILER, and EXIT. There is a console in the room as well.
+INVALID;1;GO WORKING-STORAGE;5;GO FILES;9;GO COMPILER;47;GO EXIT;13;GO CONSOLE;179;
 WORKING-STORAGE:
 NONE;7;
 This space is immense, filled with perfectly organized shelves of data fields. Each shelf holds thousands of variables. In the center, an ancient, neglected console is blinking.
@@ -176,3 +176,23 @@ NONE;1;
 0
 0
 5END-THE-MISSING-PERIOD.
+*We need to unstring the CUSTOMER-RECORD into the four variables
+NONE;181;
+*CUSTOMER-ID, CUSTOMER-NAME, CUSTOMER-BALANCE, and CUSTOMER-LOAN.
+NONE;183;
+*Each field is separated by spaces in the CUSTOMER-RECORD.
+NONE;185;
+ ________ _______________ _________ __ ___ _____ ____
+NONE;187;
+    CUSTOMER-ID, CUSTOMER-NAME, CUSTOMER-BALANCE, CUSTOMER-LOAN
+NONE;189;
+ END-UNSTRING.
+NONE;191;
+
+NONE;193;
+The cursor is waiting patiently for your input.
+INVALID;179;HIDDEN;0;UNSTRING CUSTOMER-RECORD DELIMITED BY ALL SPACE INTO;195;
+Amazing! You receive a punch card.
+NONE;197;
+
+NONE;1;
