@@ -11,7 +11,7 @@ This game is meant to showcase the file reading and writing capabilities of COBO
 To play the game, you can either install the correct binary for your system under the "Releases" tab, or you can clone the GitHub repository and compile the game yourself using a COBOL compiler. If you want to compile it yourself, I recommend the GnuCOBOL compiler:
 - https://gnucobol.sourceforge.io
 
-Once you have the binary, you can run it either by double clicking on it, or by executing the following command:
+Once you have the binary, you can run it by executing the following command:
 
 Windows:
 ```
