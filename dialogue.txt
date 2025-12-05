@@ -1,6 +1,6 @@
 PROCEDURE:
 NONE;3;
-You are surrounded by a dizzying sequence of MOVE and COMPUTE statements. A large, dimly glowing sign points in two directions: WORKING-STORAGE and FILES.
+You are surrounded by a dizzying sequence of MOVE and COMPUTE statements. A large, dimly glowing sign points in four directions: WORKING-STORAGE, FILES, COMPILER, and EXIT.
 INVALID;1;GO WORKING-STORAGE;5;GO FILES;9;GO COMPILER;47;GO EXIT;13;
 WORKING-STORAGE:
 NONE;7;
