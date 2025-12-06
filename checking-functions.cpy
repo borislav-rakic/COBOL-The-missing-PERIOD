@@ -10,8 +10,6 @@
            END-PERFORM.
 
            IF ACTION-VALID
-               PERFORM PROGRESS-CHECK
-
                SET CURRENT-DIALOGUE-INDEX TO
                    ACTION(CURRENT-ACTION-COUNTER + 1)
                DISPLAY " "
@@ -33,6 +31,8 @@
                SET FILES-PUNCH-CARD TO 'Y'
            ELSE IF CURRENT-DIALOGUE-INDEX = 87
                SET COMPILER-SOLVED TO 'Y'
+           ELSE IF CURRENT-DIALOGUE-INDEX = 195
+               SET PROCEDURE-PUNCH-CARD TO 'Y'
            END-IF.
        
        CHECK-CONDITIONS.
@@ -58,10 +58,14 @@
                AND FILES-MISSING-PERIOD = 'Y'
                SET CURRENT-DIALOGUE-INDEX TO 117
            ELSE IF CURRENT-DIALOGUE-INDEX = 13
-               AND WS-PUNCH-CARD = 'Y' AND FILES-PUNCH-CARD = 'Y'
+               AND WS-PUNCH-CARD = 'Y'
+               AND FILES-PUNCH-CARD = 'Y'
+               AND PROCEDURE-PUNCH-CARD = 'Y'
                SET CURRENT-DIALOGUE-INDEX TO 135
            ELSE IF CURRENT-DIALOGUE-INDEX = 13
-               AND (WS-PUNCH-CARD = 'Y' OR FILES-PUNCH-CARD = 'Y')
+               AND (WS-PUNCH-CARD = 'Y' 
+                   OR FILES-PUNCH-CARD = 'Y'
+                   OR PROCEDURE-PUNCH-CARD = 'Y')
                SET CURRENT-DIALOGUE-INDEX TO 133
            ELSE IF CURRENT-DIALOGUE-INDEX = 137
                AND COMPILER-SOLVED = 'N'

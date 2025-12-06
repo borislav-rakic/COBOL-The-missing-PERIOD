@@ -130,9 +130,9 @@ You already examined the console.
 NONE;131;
 
 NONE;9;
-There are two machines next to the exit door. One one each side. Each is blinking in anticipation of a card-like object. Maybe you have to insert two punch cards?
+There are three slots nexts to the door. Each is blinking in anticipation of a card-like object.
 INVALID;13;GO BACK;1;
-There are two machines next to the exit door. One one each side. Each is blinking in anticipation of a card-like object. Maybe you have to insert two punch cards?
+There are three slots nexts to the door. Each is blinking in anticipation of a card-like object.
 INVALID;13;GO BACK;1;INSERT PUNCH CARDS;137;
 An audible click indicates the door is now unlocked. You are blinded by a bright light as you open it carefully.
 ENDING;145;

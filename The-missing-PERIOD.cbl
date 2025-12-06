@@ -70,6 +70,7 @@
            02 FILES-MISSING-PERIOD PIC X(1) VALUE 'N'.
            02 FILES-PUNCH-CARD     PIC X(1) VALUE 'N'.
            02 COMPILER-SOLVED      PIC X(1) VALUE 'N'.
+           02 PROCEDURE-PUNCH-CARD PIC X(1) VALUE 'N'.
 
        PROCEDURE DIVISION.
        MAIN-LOGIC.
@@ -130,6 +131,8 @@
            END-PERFORM.
 
        EXPLORING-ROUTINE.
+           PERFORM PROGRESS-CHECK.
+
       *    First we check if certain conditions are met, in which case  
       *    the player would be redirected TO different DIALOGUE.
            PERFORM CHECK-CONDITIONS.
@@ -174,7 +177,9 @@
                ADD 1 TO CURRENT-DIALOGUE-INDEX
            END-PERFORM.
 
-           SET GAME-QUIT TO TRUE.
+           MOVE "1" TO ACTION(2).
+
+           PERFORM SAVE-QUIT-LOGIC.
        
        COPY save-file-handling.
        COPY available-actions.
