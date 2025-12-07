@@ -5,7 +5,7 @@ A text-based game made using COBOL as part of the Seminar "Programming Languages
 The missing PERIOD is a very, very short text-based game, where you have to navigate your way around a COBOL codebase to fix an issue. Can you unravel the spaghetti code and find a way to run the program?
 
 ## ✨ Features
-This game is meant to showcase the file reading and writing capabilities of COBOL. The player can save the game and load it at a later time, and the dialogue of the game is also stored in a separate file.
+This game is meant to showcase the file reading and writing capabilities of COBOL. The player can save the game by typing the command "SAVE" when prompted for input, and load it at a later time, and the dialogue of the game is also stored in a separate file.
 
 ## 🚀 Getting started
 To play the game, you can either install the correct binary for your system under the "Releases" tab, or you can clone the GitHub repository and compile the game yourself using a COBOL compiler. If you want to compile it yourself, I recommend the GnuCOBOL compiler:
