@@ -196,3 +196,7 @@ Amazing! You receive a punch card.
 NONE;197;
 
 NONE;1;
+You already examined the console.
+NONE;201;
+
+NONE;1;
